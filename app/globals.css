@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 @theme inline {
@@ -12,15 +12,47 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+body {
+  min-height: 100vh;
+}
+
+.glass-header {
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 20px 60px -40px rgba(0, 0, 0, 0.8);
+}
+
+.hero-gradient {
+  background: radial-gradient(circle at top, rgba(0, 255, 255, 0.08), transparent 55%),
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.06), transparent 60%),
+    linear-gradient(180deg, rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 1));
+}
+
+.hero-canvas-wrapper {
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
+  box-shadow: 0 30px 90px -50px rgba(0, 0, 0, 0.95);
+  overflow: hidden;
+}
+
+.model-shadow {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  height: 50px;
+  width: 240px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.7), transparent 70%);
+  filter: blur(8px);
+  opacity: 0.7;
+  pointer-events: none;
 }
