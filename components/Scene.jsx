@@ -12,10 +12,10 @@ import {
 } from "@react-three/drei";
 import { LoopOnce, MathUtils } from "three";
 
-function LaptopModel() {
+function ProductModel({ modelPath }) {
   const group = useRef();
   const [hovered, setHovered] = useState(false);
-  const { scene, animations } = useGLTF("/models/laptop_hp_victus.glb");
+  const { scene, animations } = useGLTF(modelPath);
   const { actions } = useAnimations(animations, group);
 
   useEffect(() => {
@@ -69,7 +69,12 @@ function LaptopModel() {
   );
 }
 
-export default function Scene({ modelOffsetX = 0, modelOffsetY = -0.25, modelScale = 1 }) {
+export default function Scene({
+  modelPath = "/models/laptop_hp_victus.glb",
+  modelOffsetX = 0,
+  modelOffsetY = -0.25,
+  modelScale = 1,
+}) {
   const cameraSettings = useMemo(
     () => ({ position: [0, 0.3, 3.2], fov: 40 }),
     []
@@ -96,7 +101,7 @@ export default function Scene({ modelOffsetX = 0, modelOffsetY = -0.25, modelSca
       <Suspense fallback={null}>
         <Environment preset="studio" />
         <group position={[modelOffsetX, modelOffsetY, 0]} scale={modelScale}>
-          <LaptopModel />
+          <ProductModel modelPath={modelPath} />
         </group>
         <ContactShadows
           position={[modelOffsetX, modelOffsetY - 0.85, 0]}
@@ -119,3 +124,4 @@ export default function Scene({ modelOffsetX = 0, modelOffsetY = -0.25, modelSca
 }
 
 useGLTF.preload("/models/laptop_hp_victus.glb");
+useGLTF.preload("/models/impresora_hp_tank.glb");

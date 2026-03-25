@@ -4,6 +4,7 @@ import Image from "next/image";
 
 const navItems = [
   { label: "Inicio", href: "#inicio" },
+  { label: "Impresora", href: "#impresora" },
   { label: "Productos", href: "#productos" },
   { label: "Contacto", href: "#contacto" },
 ];
