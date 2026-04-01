@@ -10,13 +10,34 @@ import {
   useAnimations,
   useGLTF,
 } from "@react-three/drei";
-import { LoopOnce, MathUtils } from "three";
+import { Color, LoopOnce, MathUtils } from "three";
 
 function ProductModel({ modelPath }) {
   const group = useRef();
   const [hovered, setHovered] = useState(false);
   const { scene, animations } = useGLTF(modelPath);
   const { actions } = useAnimations(animations, group);
+  const rgbMaterials = useMemo(() => {
+    const materials = [];
+    scene.traverse((child) => {
+      if (!child.isMesh) {
+        return;
+      }
+      const meshMaterials = Array.isArray(child.material)
+        ? child.material
+        : [child.material];
+      meshMaterials.forEach((material) => {
+        if (!material) {
+          return;
+        }
+        const name = material.name ? material.name.toLowerCase() : "";
+        if (name === "rgb1" || name.includes("rgb1")) {
+          materials.push(material);
+        }
+      });
+    });
+    return materials;
+  }, [scene]);
 
   useEffect(() => {
     if (!actions) {
@@ -32,6 +53,20 @@ function ProductModel({ modelPath }) {
       action.fadeIn(0.6).play();
     });
   }, [actions]);
+
+  useEffect(() => {
+    if (rgbMaterials.length === 0) {
+      return;
+    }
+    rgbMaterials.forEach((material) => {
+      if (!material.emissive) {
+        return;
+      }
+      material.emissive = new Color(0xff0000);
+      material.emissiveIntensity = 1.2;
+      material.needsUpdate = true;
+    });
+  }, [rgbMaterials]);
 
   useFrame((state, delta) => {
     if (!group.current) {
@@ -53,6 +88,19 @@ function ProductModel({ modelPath }) {
       delta
     );
     group.current.rotation.y += delta * 0.15;
+
+    if (rgbMaterials.length > 0) {
+      const time = state.clock.elapsedTime;
+      const r = 0.5 + Math.sin(time * 2.2) * 0.5;
+      const g = 0.5 + Math.sin(time * 2.2 + Math.PI * 0.6) * 0.5;
+      const b = 0.5 + Math.sin(time * 2.2 + Math.PI * 1.2) * 0.5;
+      rgbMaterials.forEach((material) => {
+        if (!material.emissive) {
+          return;
+        }
+        material.emissive.setRGB(r, g, b);
+      });
+    }
   });
 
   return (
@@ -125,3 +173,4 @@ export default function Scene({
 
 useGLTF.preload("/models/laptop_hp_victus.glb");
 useGLTF.preload("/models/impresora_hp_tank.glb");
+useGLTF.preload("/models/mouse_hp_m160.glb");
