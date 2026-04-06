@@ -174,3 +174,4 @@ export default function Scene({
 useGLTF.preload("/models/laptop_hp_victus.glb");
 useGLTF.preload("/models/impresora_hp_tank.glb");
 useGLTF.preload("/models/mouse_hp_m160.glb");
+useGLTF.preload("/models/audifonos_hp.glb");

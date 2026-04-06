@@ -6,6 +6,7 @@ const navItems = [
   { label: "Inicio", href: "#inicio" },
   { label: "Impresora", href: "#impresora" },
   { label: "Mouse", href: "#mouse" },
+  { label: "Audifonos", href: "#audifonos" },
   { label: "Productos", href: "#productos" },
   { label: "Contacto", href: "#contacto" },
 ];

@@ -4,6 +4,7 @@ import ContactSection from "../components/ContactSection";
 import MouseSection from "../components/MouseSection";
 import PrinterSection from "../components/PrinterSection";
 import ProductsSection from "../components/ProductsSection";
+import HeadsetSection from "../components/HeadsetSection";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
         <Hero3D />
         <PrinterSection />
         <MouseSection />
+        <HeadsetSection />
         <ProductsSection />
         <ContactSection />
       </main>
